@@ -68,3 +68,24 @@ history = model.fit(x_train, y_train,
           verbose=1,
           validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
+
+
+plt.plot(history.history["acc"])
+plt.plot(history.history["val_acc"])
+plt.title("Model Accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.legend(["train", "test"], loc="upper left")
+plt.show()
+
+
+plt.plot(history.history["loss"])
+plt.plot(history.history["val_loss"])
+plt.title("Model Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.legend(["train", "test"], loc="upper left")
+plt.show()
+
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
