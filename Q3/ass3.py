@@ -22,4 +22,9 @@ with tf.Session() as session:
                            max_batch_size=BATCH_SIZE,
                            output_keep_prob=0.8)
     # Initialize all defined TF Variables
-    
+    session.run(tf.global_variables_initializer())
+    # Do the training
+    epoch = 1
+    step = 1
+    arr1 = []
+    arr2 = []
