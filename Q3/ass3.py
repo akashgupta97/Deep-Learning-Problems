@@ -28,3 +28,8 @@ with tf.Session() as session:
     step = 1
     arr1 = []
     arr2 = []
+    for epoch in range(101):
+        for inputs, targets in dataset:
+            loss = model.train_step(session, inputs, targets)
+            step += 1
+        if epoch % 10 == 0:
