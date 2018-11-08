@@ -33,3 +33,12 @@ with tf.Session() as session:
             loss = model.train_step(session, inputs, targets)
             step += 1
         if epoch % 10 == 0:
+            # Evaluate from time to time
+            print("Evaluating")
+            dev_dataset = Dataset(DEV_PATH, vocab, batch_size=1,
+                                  num_timesteps=NUM_TIMESTEPS)
+            dev_loss = model.evaluate(session, dev_dataset)
+            arr1.append(loss)
+            arr2.append(dev_loss)
+            print("Epoch: %d, Step: %d, Train Loss: %f, Dev Loss: %f" % (
+                epoch, step, loss, dev_loss))
