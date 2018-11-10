@@ -42,3 +42,5 @@ with tf.Session() as session:
             arr2.append(dev_loss)
             print("Epoch: %d, Step: %d, Train Loss: %f, Dev Loss: %f" % (
                 epoch, step, loss, dev_loss))
+        # Sample from the model from time to time
+            print("The " + model.sample_text(session, vocab, "The "))
