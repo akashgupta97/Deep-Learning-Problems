@@ -44,3 +44,11 @@ with tf.Session() as session:
                 epoch, step, loss, dev_loss))
         # Sample from the model from time to time
             print("The " + model.sample_text(session, vocab, "The "))
+
+plt.plot(arr1)
+plt.plot(arr2)
+plt.title("Model Loss")
+plt.xlabel("Epoch*10")
+plt.ylabel("Loss")
+plt.legend(["train", "test"], loc="upper left")
+plt.show()
