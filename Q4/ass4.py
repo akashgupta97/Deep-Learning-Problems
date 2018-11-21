@@ -151,3 +151,9 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
     # Merge all of the summaries
     merged = tf.summary.merge_all()
     # Export the nodes
+    export_nodes = ['inputs', 'labels', 'keep_prob', 'initial_state', 'final_state', 'accuracy', 'predictions', 'cost',
+                    'optimizer', 'merged']
+    Graph = namedtuple('Graph', export_nodes)
+    local_dict = locals()
+    graph = Graph(*[local_dict[each] for each in export_nodes])
+    return graph
