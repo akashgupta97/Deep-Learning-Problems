@@ -144,3 +144,10 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
     with tf.name_scope('train'):
         optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
     # Determine the accuracy
+    with tf.name_scope("accuracy"):
+        correct_pred = tf.equal(tf.cast(tf.round(predictions), tf.int32), labels)
+        accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+        tf.summary.scalar('accuracy', accuracy)
+    # Merge all of the summaries
+    merged = tf.summary.merge_all()
+    # Export the nodes
