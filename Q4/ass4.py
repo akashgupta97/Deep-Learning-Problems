@@ -157,3 +157,11 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
     local_dict = locals()
     graph = Graph(*[local_dict[each] for each in export_nodes])
     return graph
+def train(model, epochs, log_string):
+    '''Train the RNN'''
+    saver = tf.train.Saver()
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        # Used to determine when to stop the training early
+        valid_loss_summary = []
+        # Keep track of which batch iteration is being trained
