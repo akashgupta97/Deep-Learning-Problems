@@ -137,3 +137,10 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
                                                         biases_initializer=biases)
         tf.summary.histogram('predictions', predictions)
     # Calculate the cost
+    with tf.name_scope('cost'):
+        cost = tf.losses.mean_squared_error(labels, predictions)
+        tf.summary.scalar('cost', cost)
+    # Train the model
+    with tf.name_scope('train'):
+        optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
+    # Determine the accuracy
