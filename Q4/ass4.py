@@ -113,3 +113,11 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
     with tf.name_scope("RNN_forward"):
         outputs, final_state = tf.nn.dynamic_rnn(cell, embed, initial_state=initial_state)
         # Create the fully connected layers
+    with tf.name_scope("fully_connected"):
+        # Initialize the weights and biases
+        weights = tf.truncated_normal_initializer(stddev=0.1)
+        biases = tf.zeros_initializer()
+        dense = tf.contrib.layers.fully_connected(outputs[:, -1], num_outputs=fc_units, activation_fn=tf.sigmoid,
+                                                  weights_initializer=weights, biases_initializer=biases)
+        dense = tf.contrib.layers.dropout(dense, keep_prob)
+        # Depending on the iteration, use a second fully connected layer
