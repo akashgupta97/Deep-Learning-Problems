@@ -121,3 +121,19 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
                                                   weights_initializer=weights, biases_initializer=biases)
         dense = tf.contrib.layers.dropout(dense, keep_prob)
         # Depending on the iteration, use a second fully connected layer
+        if multiple_fc == True:
+            dense = tf.contrib.layers.fully_connected(dense,
+                                                      num_outputs=fc_units,
+                                                      activation_fn=tf.sigmoid,
+                                                      weights_initializer=weights,
+                                                      biases_initializer=biases)
+            dense = tf.contrib.layers.dropout(dense, keep_prob)
+    # Make the predictions
+    with tf.name_scope('predictions'):
+        predictions = tf.contrib.layers.fully_connected(dense,
+                                                        num_outputs=1,
+                                                        activation_fn=tf.sigmoid,
+                                                        weights_initializer=weights,
+                                                        biases_initializer=biases)
+        tf.summary.histogram('predictions', predictions)
+    # Calculate the cost
