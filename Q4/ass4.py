@@ -165,3 +165,8 @@ def train(model, epochs, log_string):
         # Used to determine when to stop the training early
         valid_loss_summary = []
         # Keep track of which batch iteration is being trained
+        iteration = 0
+        print()
+        print("Training Model: {}".format(log_string))
+        train_writer = tf.summary.FileWriter('./logs/3/train/{}'.format(log_string), sess.graph)
+        valid_writer = tf.summary.FileWriter('./logs/3/valid/{}'.format(log_string))
