@@ -170,3 +170,10 @@ def train(model, epochs, log_string):
         print("Training Model: {}".format(log_string))
         train_writer = tf.summary.FileWriter('./logs/3/train/{}'.format(log_string), sess.graph)
         valid_writer = tf.summary.FileWriter('./logs/3/valid/{}'.format(log_string))
+        for e in range(epochs):
+            state = sess.run(model.initial_state)
+            # Record progress with each epoch
+            train_loss = []
+            train_acc = []
+            val_acc = []
+            val_loss = []
