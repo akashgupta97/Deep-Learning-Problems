@@ -10,3 +10,9 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from collections import namedtuple
 
+path = r'C:/ass1/ass4/MovieDataset/'
+train = pd.read_csv(path + "labeledTrainData.tsv", delimiter="\t")
+test = pd.read_csv(path + "testData.tsv", delimiter="\t")
+
+train.head(5)
+
