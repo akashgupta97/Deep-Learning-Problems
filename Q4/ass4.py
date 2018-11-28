@@ -106,3 +106,10 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
         # cell = tf.contrib.rnn.MultiRNNCell([drop] * num_layers)
         cell = drop
         # print(cell.shape)
+    # Set the initial state
+    with tf.name_scope("RNN_init_state"):
+        initial_state = cell.zero_state(batch_size, tf.float32)
+    # Run the data through the RNN layers
+    with tf.name_scope("RNN_forward"):
+        outputs, final_state = tf.nn.dynamic_rnn(cell, embed, initial_state=initial_state)
+        # Create the fully connected layers
