@@ -177,3 +177,12 @@ def train(model, epochs, log_string):
             train_acc = []
             val_acc = []
             val_loss = []
+            with tqdm(total=len(x_train)) as pbar:
+                for _, (x, y) in enumerate(get_batches(x_train, y_train, batch_size), 1):
+                    feed = {model.inputs: x, model.labels: y[:, None], model.keep_prob: dropout,
+                            model.initial_state: state}
+                    summary, loss, acc, state, _ = sess.run(
+                        [model.merged, model.cost, model.accuracy, model.final_state,
+                         model.optimizer],
+                        feed_dict=feed)
+                    # Record the loss and accuracy of each training  batch
