@@ -16,3 +16,20 @@ test = pd.read_csv(path + "testData.tsv", delimiter="\t")
 
 train.head(5)
 
+def clean_text(text, remove_stopwords=True):
+    '''Clean the text, with the option to remove stopwords'''
+    # Convert words to lower case and split them
+    text = text.lower().split()
+    # Optionally, remove stop words
+    if remove_stopwords:
+        stops = set(stopwords.words("english"))
+        text = [w for w in text if not w in stops]
+    text = " ".join(text)
+    # Clean the text
+    text = re.sub(r"<br />", " ", text)
+    text = re.sub(r"[^a-z]", " ", text)
+    text = re.sub(r"   ", " ", text)  # Remove any extra spaces
+    text = re.sub(r"  ", " ", text)
+    # Return a list of words
+    return (text)
+
