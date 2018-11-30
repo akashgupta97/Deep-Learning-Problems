@@ -33,3 +33,11 @@ def clean_text(text, remove_stopwords=True):
     # Return a list of words
     return (text)
 
+
+train_clean = train
+test_clean = test
+
+train_clean['review'] = train_clean['review'].apply(lambda x: clean_text(x))
+test_clean['review'] = test_clean['review'].apply(lambda x: clean_text(x))
+
+test_clean.head(5)
