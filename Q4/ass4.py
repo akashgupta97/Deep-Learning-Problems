@@ -186,3 +186,10 @@ def train(model, epochs, log_string):
                          model.optimizer],
                         feed_dict=feed)
                     # Record the loss and accuracy of each training  batch
+                    train_loss.append(loss)
+                    train_acc.append(acc)
+                    # Record the progress of training
+                    train_writer.add_summary(summary, iteration)
+                    iteration += 1
+                    pbar.update(batch_size)
+            # Average the training loss and accuracy of each epoch
