@@ -72,3 +72,11 @@ def get_batches(x, y, batch_size):
     for ii in range(0, len(x), batch_size):
         yield x[ii:ii + batch_size], y[ii:ii + batch_size]
 
+
+def get_test_batches(x, batch_size):
+    '''Create the batches for the testing data'''
+    n_batches = len(x) // batch_size
+    x = x[:n_batches * batch_size]
+    for ii in range(0, len(x), batch_size):
+        yield x[ii:ii + batch_size]
+
