@@ -193,3 +193,16 @@ def train(model, epochs, log_string):
                     iteration += 1
                     pbar.update(batch_size)
             # Average the training loss and accuracy of each epoch
+            avg_train_loss = np.mean(train_loss)
+            avg_train_acc = np.mean(train_acc)
+            val_state = sess.run(model.initial_state)
+            with tqdm(total=len(x_valid)) as pbar:
+                for x, y in get_batches(x_valid, y_valid, batch_size):
+                    feed = {model.inputs: x,
+                            model.labels: y[:, None],
+                            model.keep_prob: 1,
+                            model.initial_state: val_state}
+                    summary, batch_loss, batch_acc, val_state = sess.run(
+                        [model.merged, model.cost, model.accuracy, model.final_state],
+                        feed_dict=feed)
+                    # Record the validation loss and accuracy of each epoch
