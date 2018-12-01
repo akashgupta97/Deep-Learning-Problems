@@ -80,3 +80,20 @@ def get_test_batches(x, batch_size):
     for ii in range(0, len(x), batch_size):
         yield x[ii:ii + batch_size]
 
+def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, learning_rate, multiple_fc, fc_units):
+    '''Build the Recurrent Neural Network'''
+    tf.reset_default_graph()
+    # Declare placeholders we'll feed into the graph
+    with tf.name_scope('inputs'):
+        inputs = tf.placeholder(tf.int32, [None, None], name='inputs')
+        print("Input = ", inputs.shape)
+    with tf.name_scope('labels'):
+        labels = tf.placeholder(tf.int32, [None, None], name='labels')
+        print("labels = ", labels.shape)
+    keep_prob = tf.placeholder(tf.float32, name='keep_prob')
+    # Create the embeddings
+    with tf.name_scope("embeddings"):
+        embedding = tf.Variable(tf.random_uniform((n_words, embed_size), -1, 1))
+        print("embeddings = ", embedding.shape)
+        embed = tf.nn.embedding_lookup(embedding, inputs)
+        print("embed = ", embed.shape)
