@@ -41,3 +41,9 @@ train_clean['review'] = train_clean['review'].apply(lambda x: clean_text(x))
 test_clean['review'] = test_clean['review'].apply(lambda x: clean_text(x))
 
 test_clean.head(5)
+
+# Tokenize the reviews
+all_reviews = list(train_clean['review']) + list(test_clean['review'])
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(all_reviews)
+print("Fitting is complete.")
