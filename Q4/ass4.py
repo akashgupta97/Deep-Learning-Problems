@@ -206,3 +206,13 @@ def train(model, epochs, log_string):
                         [model.merged, model.cost, model.accuracy, model.final_state],
                         feed_dict=feed)
                     # Record the validation loss and accuracy of each epoch
+                    val_loss.append(batch_loss)
+                    val_acc.append(batch_acc)
+                    pbar.update(batch_size)
+            # Average the validation loss and accuracy of each epoch
+            avg_valid_loss = np.mean(val_loss)
+            avg_valid_acc = np.mean(val_acc)
+            valid_loss_summary.append(avg_valid_loss)
+            # Record the validation data's progress
+            valid_writer.add_summary(summary, iteration)
+            # Print the progress of each epoch
