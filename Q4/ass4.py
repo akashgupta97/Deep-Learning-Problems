@@ -47,3 +47,12 @@ all_reviews = list(train_clean['review']) + list(test_clean['review'])
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(all_reviews)
 print("Fitting is complete.")
+
+train_seq = tokenizer.texts_to_sequences(list(train_clean['review']))
+print("train_seq is complete.")
+
+test_seq = tokenizer.texts_to_sequences(list(test_clean['review']))
+print("test_seq is complete")
+
+max_review_length = 200
+
