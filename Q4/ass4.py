@@ -97,3 +97,12 @@ def build_rnn(n_words, embed_size, batch_size, lstm_size, num_layers, dropout, l
         print("embeddings = ", embedding.shape)
         embed = tf.nn.embedding_lookup(embedding, inputs)
         print("embed = ", embed.shape)
+    # Build the RNN layers
+    with tf.name_scope("RNN_layers"):
+        lstm = tf.contrib.rnn.BasicLSTMCell(lstm_size)
+        # print(lstm.output_size)
+        drop = tf.contrib.rnn.DropoutWrapper(lstm, output_keep_prob=keep_prob)
+        # print(drop.output_shape)
+        # cell = tf.contrib.rnn.MultiRNNCell([drop] * num_layers)
+        cell = drop
+        # print(cell.shape)
