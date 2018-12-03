@@ -216,3 +216,21 @@ def train(model, epochs, log_string):
             # Record the validation data's progress
             valid_writer.add_summary(summary, iteration)
             # Print the progress of each epoch
+            print("Epoch: {}/{}".format(e, epochs),
+                  "Train Loss: {:.3f}".format(avg_train_loss),
+                  "Train Acc: {:.3f}".format(avg_train_acc),
+                  "Valid Loss: {:.3f}".format(avg_valid_loss),
+                  "Valid Acc: {:.3f}".format(avg_valid_acc))
+            # Stop training if the validation loss does not decrease after 3 epochs
+            if avg_valid_loss > min(valid_loss_summary):
+                print("No Improvement.")
+                stop_early += 1
+                if stop_early == 3:
+                    break
+                    # Reset stop_early if the validation loss finds a new low
+            # Save a checkpoint of the model
+            else:
+                print("New Record!")
+                stop_early = 0
+                checkpoint = "./sentiment_{}.ckpt".format(log_string)
+                saver.save(sess, checkpoint)
