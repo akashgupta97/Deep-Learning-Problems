@@ -234,3 +234,52 @@ def train(model, epochs, log_string):
                 stop_early = 0
                 checkpoint = "./sentiment_{}.ckpt".format(log_string)
                 saver.save(sess, checkpoint)
+n_words = len(tokenizer.word_index)
+embed_size = 50
+batch_size = 250
+lstm_size = 64
+num_layers = 2
+dropout = 0.5
+learning_rate = 0.001
+epochs = 5
+multiple_fc = False
+fc_units = 250
+for lstm_size in [64]:
+    for multiple_fc in [True]:
+        for fc_units in [128]:
+            log_string = 'ru={},fcl={},fcu={}'.format(lstm_size, multiple_fc, fc_units)
+            model = build_rnn(n_words=n_words, embed_size=embed_size, batch_size=batch_size, lstm_size=lstm_size,
+                              num_layers=num_layers,
+                              dropout=dropout,
+                              learning_rate=learning_rate,
+                              multiple_fc=multiple_fc,
+                              fc_units=fc_units)
+            train(model, epochs + 1, log_string)
+def make_predictions(lstm_size, multiple_fc, fc_units, checkpoint):
+    '''Predict the sentiment of the testing data'''
+    # Record all of the predictions
+    all_preds = []
+    model = build_rnn(n_words=n_words,
+                      embed_size=embed_size,
+                      batch_size=batch_size,
+                      lstm_size=lstm_size,
+                      num_layers=num_layers,
+                      dropout=dropout,
+                      learning_rate=learning_rate,
+                      multiple_fc=multiple_fc,
+                      fc_units=fc_units)
+    with tf.Session() as sess:
+        saver = tf.train.Saver()
+        # Load the model
+        saver.restore(sess, checkpoint)
+        test_state = sess.run(model.initial_state)
+        for _, x in enumerate(get_test_batches(x_valid,
+                                               batch_size), 1):
+            feed = {model.inputs: x,
+                    model.keep_prob: 1,
+                    model.initial_state: test_state}
+            predictions = sess.run(model.predictions, feed_dict=feed)
+            for pred in predictions:
+                all_preds.append(float(pred))
+    return all_preds
+pred = make_predictions(64, True, 128, "sentiment_ru=64,fcl=True,fcu=128.ckpt")
