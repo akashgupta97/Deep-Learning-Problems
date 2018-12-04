@@ -56,3 +56,10 @@ print("test_seq is complete")
 
 max_review_length = 200
 
+train_pad = pad_sequences(train_seq, maxlen=max_review_length)
+print("train_pad is complete.")
+
+test_pad = pad_sequences(test_seq, maxlen=max_review_length)
+print("test_pad is complete.")
+
+x_train, x_valid, y_train, y_valid = train_test_split(train_pad, train.sentiment, test_size=0.15, random_state=2)
