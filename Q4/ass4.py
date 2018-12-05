@@ -63,3 +63,12 @@ test_pad = pad_sequences(test_seq, maxlen=max_review_length)
 print("test_pad is complete.")
 
 x_train, x_valid, y_train, y_valid = train_test_split(train_pad, train.sentiment, test_size=0.15, random_state=2)
+
+
+def get_batches(x, y, batch_size):
+    '''Create the batches for the training and validation data'''
+    n_batches = len(x) // batch_size
+    x, y = x[:n_batches * batch_size], y[:n_batches * batch_size]
+    for ii in range(0, len(x), batch_size):
+        yield x[ii:ii + batch_size], y[ii:ii + batch_size]
+
