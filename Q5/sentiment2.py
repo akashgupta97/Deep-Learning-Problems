@@ -41,3 +41,14 @@ def ingest():
     return data
 
 
+def tokenize(tweet):
+    try:
+        tweet = unicode(tweet.decode('utf-8').lower())
+        tokens = tokenizer.tokenize(tweet)
+        tokens = filter(lambda t: not t.startswith('@'), tokens)
+        tokens = filter(lambda t: not t.startswith('#'), tokens)
+        tokens = filter(lambda t: not t.startswith('http'), tokens)
+        return tokens
+    except:
+        return 'NC'
+
