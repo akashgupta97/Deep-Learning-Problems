@@ -52,3 +52,13 @@ def tokenize(tweet):
     except:
         return 'NC'
 
+
+def postprocess(data, n=1000000):
+    data = data.head(n)
+    data['tokens'] = data['SentimentText'].progress_map(tokenize)  ## progress_map is a variant of the map function plus a progress bar. Handy to monitor DataFrame creations.
+    data = data[data.tokens != 'NC']
+    data.reset_index(inplace=True)
+    data.drop('index', inplace=True, axis=1)
+    return data
+
+
