@@ -62,3 +62,20 @@ def postprocess(data, n=1000000):
     return data
 
 
+def labelizeTweets(tweets, label_type):
+    labelized = []
+    for i,v in tqdm(enumerate(tweets)):
+        label = '%s_%s'%(label_type,i)
+        labelized.append(LabeledSentence(v, [label]))
+    return labelized
+
+
+def buildWordVector(tokens, size):
+    vec = np.zeros(size).reshape((1, size))
+    count = 0.
+    for word in tokens:
+        try:
+            vec += tweet_w2v[word].reshape((1, size)) * tfidf[word]
+            count += 1.
+        except KeyError: # handling the case where the token is not
+                         # in the corpus. useful for testing.
