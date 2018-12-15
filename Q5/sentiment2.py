@@ -79,3 +79,7 @@ def buildWordVector(tokens, size):
             count += 1.
         except KeyError: # handling the case where the token is not
                          # in the corpus. useful for testing.
+                         continue
+        if count != 0:
+            vec /= count
+        return vec
