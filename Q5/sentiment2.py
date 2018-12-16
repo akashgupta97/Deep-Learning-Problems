@@ -83,3 +83,11 @@ def buildWordVector(tokens, size):
         if count != 0:
             vec /= count
         return vec
+
+if __name__=="__main__":
+	data = ingest()
+	data = postprocess(data)
+	n=1000000
+	n_dim = 200
+	x_train, x_test, y_train, y_test = train_test_split(np.array(data.head(n).tokens),
+                                                    np.array(data.head(n).Sentiment), test_size=0.2)
