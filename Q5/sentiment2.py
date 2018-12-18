@@ -91,3 +91,12 @@ if __name__=="__main__":
 	n_dim = 200
 	x_train, x_test, y_train, y_test = train_test_split(np.array(data.head(n).tokens),
                                                     np.array(data.head(n).Sentiment), test_size=0.2)
+	x_train = labelizeTweets(x_train, 'TRAIN')
+	x_test = labelizeTweets(x_test, 'TEST')
+	tweet_w2v = Word2Vec(size=n_dim, min_count=10)
+	tweet_w2v.build_vocab([x.words for x in tqdm(x_train)])
+	tweet_w2v.train([x.words for x in tqdm(x_train)],total_examples=tweet_w2v.corpus_count, epochs=tweet_w2v.iter)
+	output_file('foo.html')
+	plot_tfidf = figure(plot_width=700, plot_height=600, title="A map of 10000 word vectors",
+	    tools="pan,wheel_zoom,box_zoom,reset,hover,previewsave",
+	    x_axis_type=None, y_axis_type=None, min_border=1)
