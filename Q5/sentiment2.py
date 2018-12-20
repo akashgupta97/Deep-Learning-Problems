@@ -100,3 +100,8 @@ if __name__=="__main__":
 	plot_tfidf = figure(plot_width=700, plot_height=600, title="A map of 10000 word vectors",
 	    tools="pan,wheel_zoom,box_zoom,reset,hover,previewsave",
 	    x_axis_type=None, y_axis_type=None, min_border=1)
+
+	# getting a list of word vectors. limit to 10000. each is of 200 dimensions
+	word_vectors = [tweet_w2v[w] for w in tweet_w2v.wv.vocab.keys()[:5000]]
+	tsne_model = TSNE(n_components=2, verbose=1, random_state=0)
+	tsne_w2v = tsne_model.fit_transform(word_vectors)
