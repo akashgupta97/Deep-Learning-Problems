@@ -105,3 +105,7 @@ if __name__=="__main__":
 	word_vectors = [tweet_w2v[w] for w in tweet_w2v.wv.vocab.keys()[:5000]]
 	tsne_model = TSNE(n_components=2, verbose=1, random_state=0)
 	tsne_w2v = tsne_model.fit_transform(word_vectors)
+
+	# putting everything in a dataframe
+	tsne_df = pd.DataFrame(tsne_w2v, columns=['x', 'y'])
+	tsne_df['words'] = tweet_w2v.wv.vocab.keys()[:5000]
