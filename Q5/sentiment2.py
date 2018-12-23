@@ -109,3 +109,9 @@ if __name__=="__main__":
 	# putting everything in a dataframe
 	tsne_df = pd.DataFrame(tsne_w2v, columns=['x', 'y'])
 	tsne_df['words'] = tweet_w2v.wv.vocab.keys()[:5000]
+
+    # plotting. the corresponding word appears when you hover on the data point.
+    plot_tfidf.scatter(x='x', y='y', source=tsne_df)
+    hover = plot_tfidf.select(dict(type=HoverTool))
+    hover.tooltips = {"word": "@words"}
+    show(plot_tfidf)
