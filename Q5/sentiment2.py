@@ -115,3 +115,10 @@ if __name__=="__main__":
     hover = plot_tfidf.select(dict(type=HoverTool))
     hover.tooltips = {"word": "@words"}
     show(plot_tfidf)
+
+    print 'building tf-idf matrix ...'
+	vectorizer = TfidfVectorizer(analyzer=lambda x: x, min_df=10)
+	matrix = vectorizer.fit_transform([x.words for x in x_train])
+	tfidf = dict(zip(vectorizer.get_feature_names(), vectorizer.idf_))
+	print 'vocab size :', len(tfidf)
+
