@@ -125,4 +125,7 @@ if __name__=="__main__":
     train_vecs_w2v = np.concatenate([buildWordVector(z, n_dim) for z in tqdm(map(lambda x: x.words, x_train))])
 	train_vecs_w2v = scale(train_vecs_w2v)
 
+    test_vecs_w2v = np.concatenate([buildWordVector(z, n_dim) for z in tqdm(map(lambda x: x.words, x_test))])
+    test_vecs_w2v = scale(test_vecs_w2v)
+
     
