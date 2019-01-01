@@ -128,4 +128,9 @@ if __name__=="__main__":
     test_vecs_w2v = np.concatenate([buildWordVector(z, n_dim) for z in tqdm(map(lambda x: x.words, x_test))])
     test_vecs_w2v = scale(test_vecs_w2v)
 
-    
+    model = Sequential()
+	model.add(Dense(32, activation='relu', input_dim=200))
+	model.add(Dense(1, activation='sigmoid'))
+	model.compile(optimizer='rmsprop',
+		      loss='binary_crossentropy',
+		      metrics=['accuracy'])
