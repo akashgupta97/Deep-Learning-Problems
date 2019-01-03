@@ -134,3 +134,7 @@ if __name__=="__main__":
 	model.compile(optimizer='rmsprop',
 		      loss='binary_crossentropy',
 		      metrics=['accuracy'])
+
+    model.fit(train_vecs_w2v, y_train, epochs=9, batch_size=32, verbose=2)
+    score = model.evaluate(test_vecs_w2v, y_test, batch_size=128, verbose=2)
+    print score[1]
