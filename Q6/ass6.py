@@ -38,3 +38,23 @@ combined.tail()
 valid = combined.sample(n = 5000, random_state = 555)
 train = combined.loc[~combined.index.isin(valid.index)]
 
+
+# free up some space and delete test and combined
+del train_orig, test_orig, combined
+
+valid.head()
+
+# X's
+X_train = train.drop(['label'], axis = 1)
+X_valid = valid.drop(['label'], axis = 1)
+
+# labels
+y_train = train['label']
+y_valid = valid['label']
+
+# Normalize and reshape
+X_train = X_train.astype('float32') / 255.
+X_train = X_train.values.reshape(-1,28,28,1)
+
+X_valid = X_valid.astype('float32') / 255.
+X_valid = X_valid.values.reshape(-1,28,28,1)
