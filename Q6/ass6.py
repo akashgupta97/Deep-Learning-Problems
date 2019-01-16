@@ -58,3 +58,18 @@ X_train = X_train.values.reshape(-1,28,28,1)
 
 X_valid = X_valid.astype('float32') / 255.
 X_valid = X_valid.values.reshape(-1,28,28,1)
+
+
+plt.figure(1)
+plt.subplot(221)
+plt.imshow(X_train[13][:,:,0])
+
+plt.subplot(222)
+plt.imshow(X_train[690][:,:,0])
+
+plt.subplot(223)
+plt.imshow(X_train[2375][:,:,0])
+
+plt.subplot(224)
+plt.imshow(X_train[42013][:,:,0])
+plt.show()
