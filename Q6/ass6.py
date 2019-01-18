@@ -73,3 +73,34 @@ plt.imshow(X_train[2375][:,:,0])
 plt.subplot(224)
 plt.imshow(X_train[42013][:,:,0])
 plt.show()
+
+
+img_shape = (28, 28, 1)    # for MNIST
+batch_size = 16
+latent_dim = 2  # Number of latent dimension parameters
+
+# Encoder architecture: Input -> Conv2D*4 -> Flatten -> Dense
+input_img = keras.Input(shape=img_shape)
+
+x = layers.Conv2D(32, 3,
+                  padding='same',
+                  activation='relu')(input_img)
+x = layers.Conv2D(64, 3,
+                  padding='same',
+                  activation='relu',
+                  strides=(2, 2))(x)
+x = layers.Conv2D(64, 3,
+                  padding='same',
+                  activation='relu')(x)
+x = layers.Conv2D(64, 3,
+                  padding='same',
+                  activation='relu')(x)
+# need to know the shape of the network here for the decoder
+shape_before_flattening = K.int_shape(x)
+
+x = layers.Flatten()(x)
+x = layers.Dense(32, activation='relu')(x)
+# Two outputs, latent mean and (log)variance
+z_mu = layers.Dense(latent_dim)(x)
+z_log_sigma = layers.Dense(latent_dim)(x)
+
