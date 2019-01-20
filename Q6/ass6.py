@@ -104,3 +104,20 @@ x = layers.Dense(32, activation='relu')(x)
 z_mu = layers.Dense(latent_dim)(x)
 z_log_sigma = layers.Dense(latent_dim)(x)
 
+
+# sampling function
+def sampling(args):
+    z_mu, z_log_sigma = args
+    epsilon = K.random_normal(shape=(K.shape(z_mu)[0], latent_dim),
+                              mean=0., stddev=1.)
+    return z_mu + K.exp(z_log_sigma) * epsilon
+
+# sample vector from the latent distribution
+z = layers.Lambda(sampling)([z_mu, z_log_sigma])
+
+# decoder takes the latent distribution sample as input
+decoder_input = layers.Input(K.int_shape(z)[1:])
+
+# Expand to 784 total pixels
+x = layers.Dense(np.prod(shape_before_flattening[1:]),
+                 activation='relu')(decoder_input)
