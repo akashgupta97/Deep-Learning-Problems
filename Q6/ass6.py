@@ -121,3 +121,22 @@ decoder_input = layers.Input(K.int_shape(z)[1:])
 # Expand to 784 total pixels
 x = layers.Dense(np.prod(shape_before_flattening[1:]),
                  activation='relu')(decoder_input)
+
+
+# reshape
+x = layers.Reshape(shape_before_flattening[1:])(x)
+
+# use Conv2DTranspose to reverse the conv layers from the encoder
+x = layers.Conv2DTranspose(32, 3,
+                           padding='same',
+                           activation='relu',
+                           strides=(2, 2))(x)
+x = layers.Conv2D(1, 3,
+                  padding='same',
+                  activation='sigmoid')(x)
+
+# decoder model statement
+decoder = Model(decoder_input, x)
+
+# apply the decoder to the sample from the latent distribution
+z_decoded = decoder(z)
