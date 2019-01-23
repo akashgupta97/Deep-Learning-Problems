@@ -140,3 +140,23 @@ decoder = Model(decoder_input, x)
 
 # apply the decoder to the sample from the latent distribution
 z_decoded = decoder(z)
+
+# construct a custom layer to calculate the loss
+class CustomVariationalLayer(keras.layers.Layer):
+    def vae_loss(self, x, z_decoded):
+        x = K.flatten(x)
+        z_decoded = K.flatten(z_decoded)
+        # Reconstruction loss
+        xent_loss = keras.metrics.binary_crossentropy(x, z_decoded)
+        # KL divergence
+        kl_loss = -5e-4 * K.mean(1 + z_log_sigma - K.square(z_mu) - K.exp(z_log_sigma), axis=-1)
+        return K.mean(xent_loss + kl_loss)
+    # adds the custom loss to the class
+    def call(self, inputs):
+        x = inputs[0]
+        z_decoded = inputs[1]
+        loss = self.vae_loss(x, z_decoded)
+        self.add_loss(loss, inputs=inputs)
+        return x
+    # apply the custom loss to the input images and the decoded latent distribution sample
+y = CustomVariationalLayer()([input_img, z_decoded])
