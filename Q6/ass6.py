@@ -160,3 +160,24 @@ class CustomVariationalLayer(keras.layers.Layer):
         return x
     # apply the custom loss to the input images and the decoded latent distribution sample
 y = CustomVariationalLayer()([input_img, z_decoded])
+
+
+# VAE model statement
+vae = Model(input_img, y)
+vae.compile(optimizer='rmsprop', loss=None)
+vae.summary()
+
+history = vae.fit(x=X_train, y=None,
+        shuffle=True,
+        epochs=7,
+        batch_size=batch_size,
+        validation_data=(X_valid, None))
+
+
+plt.plot(history.history["acc"])
+plt.plot(history.history["val_acc"])
+plt.title("Model Accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.legend(["train", "test"], loc="upper left")
+plt.show()
