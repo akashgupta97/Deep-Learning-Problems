@@ -181,3 +181,25 @@ plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
 plt.legend(["train", "test"], loc="upper left")
 plt.show()
+
+
+
+plt.plot(history.history["loss"])
+plt.plot(history.history["val_loss"])
+plt.title("Model Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.legend(["train", "test"], loc="upper left")
+plt.show()
+
+# Isolate original training set records in validation set
+valid_noTest = valid[valid['label'] != 11]
+
+# X's and Y's
+X_valid_noTest = valid_noTest.drop('label', axis=1)
+y_valid_noTest = valid_noTest['label']
+
+# Reshape and normalize
+X_valid_noTest = X_valid_noTest.astype('float32') / 255.
+X_valid_noTest = X_valid_noTest.values.reshape(-1,28,28,1)
+
