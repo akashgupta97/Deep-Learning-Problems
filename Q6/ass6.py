@@ -203,3 +203,24 @@ y_valid_noTest = valid_noTest['label']
 X_valid_noTest = X_valid_noTest.astype('float32') / 255.
 X_valid_noTest = X_valid_noTest.values.reshape(-1,28,28,1)
 
+
+# Translate into the latent space
+encoder = Model(input_img, z_mu)
+x_valid_noTest_encoded = encoder.predict(X_valid_noTest, batch_size=batch_size)
+plt.figure(figsize=(10, 10))
+plt.scatter(x_valid_noTest_encoded[:, 0], x_valid_noTest_encoded[:, 1], c=y_valid_noTest, cmap='brg')
+plt.colorbar()
+plt.show()
+
+# set colormap so that 11's are gray
+custom_cmap = matplotlib.cm.get_cmap('brg')
+custom_cmap.set_over('gray')
+
+x_valid_encoded = encoder.predict(X_valid, batch_size=batch_size)
+plt.figure(figsize=(10, 10))
+gray_marker = mpatches.Circle(4,radius=0.1,color='gray', label='Test')
+plt.legend(handles=[gray_marker], loc = 'best')
+plt.scatter(x_valid_encoded[:, 0], x_valid_encoded[:, 1], c=y_valid, cmap=custom_cmap)
+plt.clim(0, 9)
+plt.colorbar()
+
