@@ -57,3 +57,29 @@ class VariationalAutoencoder(object):
         # Launch the session
         self.sess = tf.InteractiveSession()
         self.sess.run(init)
+
+    def _create_network(self):
+        # Initialize autoencode network weights and biases
+        network_weights = self._initialize_weights(**self.network_architecture)
+
+        # Use recognition network to determine mean and
+        # (log) variance of Gaussian distribution in latent
+        # space
+        self.z_mean, self.z_log_sigma_sq = \
+            self._recognition_network(network_weights["weights_recog"],
+                                      network_weights["biases_recog"])
+
+        # Draw one sample z from Gaussian distribution
+        n_z = self.network_architecture["n_z"]
+        eps = tf.random_normal((self.batch_size, n_z), 0, 1,
+                               dtype=tf.float32)
+        # z = mu + sigma*epsilon
+        self.z = tf.add(self.z_mean,
+                        tf.multiply(tf.sqrt(tf.exp(self.z_log_sigma_sq)), eps))
+
+        # Use generator to determine mean of
+        # Bernoulli distribution of reconstructed input
+        self.x_reconstr_mean = \
+            self._generator_network(network_weights["weights_gener"],
+                                    network_weights["biases_gener"])
+
