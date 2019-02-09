@@ -23,3 +23,37 @@ def xavier_init(fan_in, fan_out, constant=1):
     return tf.random_uniform((fan_in, fan_out),
                              minval=low, maxval=high,
                              dtype=tf.float32)
+
+
+class VariationalAutoencoder(object):
+    """ Variation Autoencoder (VAE) with an sklearn-like interface implemented using TensorFlow.
+
+    This implementation uses probabilistic encoders and decoders using Gaussian
+    distributions and  realized by multi-layer perceptrons. The VAE can be learned
+    end-to-end.
+
+    See "Auto-Encoding Variational Bayes" by Kingma and Welling for more details.
+    """
+
+    def __init__(self, network_architecture, transfer_fct=tf.nn.softplus,
+                 learning_rate=0.001, batch_size=100):
+        self.network_architecture = network_architecture
+        self.transfer_fct = transfer_fct
+        self.learning_rate = learning_rate
+        self.batch_size = batch_size
+
+        # tf Graph input
+        self.x = tf.placeholder(tf.float32, [None, network_architecture["n_input"]])
+
+        # Create autoencoder network
+        self._create_network()
+        # Define loss function based variational upper-bound and
+        # corresponding optimizer
+        self._create_loss_optimizer()
+
+        # Initializing the tensor flow variables
+        init = tf.global_variables_initializer()
+
+        # Launch the session
+        self.sess = tf.InteractiveSession()
+        self.sess.run(init)
