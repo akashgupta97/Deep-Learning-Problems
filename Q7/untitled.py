@@ -84,3 +84,29 @@ class VariationalAutoencoder(object):
         self.x_reconstr_mean = \
             self._generator_network(network_weights["weights_gener"],
                                     network_weights["biases_gener"])
+
+    def _initialize_weights(self, n_hidden_recog_1, n_hidden_recog_2,
+                            n_hidden_gener_1, n_hidden_gener_2,
+                            n_input, n_z):
+        all_weights = dict()
+        all_weights['weights_recog'] = {
+            'h1': tf.Variable(xavier_init(n_input, n_hidden_recog_1)),
+            'h2': tf.Variable(xavier_init(n_hidden_recog_1, n_hidden_recog_2)),
+            'out_mean': tf.Variable(xavier_init(n_hidden_recog_2, n_z)),
+            'out_log_sigma': tf.Variable(xavier_init(n_hidden_recog_2, n_z))}
+        all_weights['biases_recog'] = {
+            'b1': tf.Variable(tf.zeros([n_hidden_recog_1], dtype=tf.float32)),
+            'b2': tf.Variable(tf.zeros([n_hidden_recog_2], dtype=tf.float32)),
+            'out_mean': tf.Variable(tf.zeros([n_z], dtype=tf.float32)),
+            'out_log_sigma': tf.Variable(tf.zeros([n_z], dtype=tf.float32))}
+        all_weights['weights_gener'] = {
+            'h1': tf.Variable(xavier_init(n_z, n_hidden_gener_1)),
+            'h2': tf.Variable(xavier_init(n_hidden_gener_1, n_hidden_gener_2)),
+            'out_mean': tf.Variable(xavier_init(n_hidden_gener_2, n_input)),
+            'out_log_sigma': tf.Variable(xavier_init(n_hidden_gener_2, n_input))}
+        all_weights['biases_gener'] = {
+            'b1': tf.Variable(tf.zeros([n_hidden_gener_1], dtype=tf.float32)),
+            'b2': tf.Variable(tf.zeros([n_hidden_gener_2], dtype=tf.float32)),
+            'out_mean': tf.Variable(tf.zeros([n_input], dtype=tf.float32)),
+            'out_log_sigma': tf.Variable(tf.zeros([n_input], dtype=tf.float32))}
+        return all_weights
