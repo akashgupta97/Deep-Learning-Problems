@@ -110,3 +110,30 @@ class VariationalAutoencoder(object):
             'out_mean': tf.Variable(tf.zeros([n_input], dtype=tf.float32)),
             'out_log_sigma': tf.Variable(tf.zeros([n_input], dtype=tf.float32))}
         return all_weights
+
+    def _recognition_network(self, weights, biases):
+        # Generate probabilistic encoder (recognition network), which
+        # maps inputs onto a normal distribution in latent space.
+        # The transformation is parametrized and can be learned.
+        layer_1 = self.transfer_fct(tf.add(tf.matmul(self.x, weights['h1']),
+                                           biases['b1']))
+        layer_2 = self.transfer_fct(tf.add(tf.matmul(layer_1, weights['h2']),
+                                           biases['b2']))
+        z_mean = tf.add(tf.matmul(layer_2, weights['out_mean']),
+                        biases['out_mean'])
+        z_log_sigma_sq = \
+            tf.add(tf.matmul(layer_2, weights['out_log_sigma']),
+                   biases['out_log_sigma'])
+        return (z_mean, z_log_sigma_sq)
+    def _generator_network(self, weights, biases):
+        # Generate probabilistic decoder (decoder network), which
+        # maps points in latent space onto a Bernoulli distribution in data space.
+        # The transformation is parametrized and can be learned.
+        layer_1 = self.transfer_fct(tf.add(tf.matmul(self.z, weights['h1']),
+                                           biases['b1']))
+        layer_2 = self.transfer_fct(tf.add(tf.matmul(layer_1, weights['h2']),
+                                           biases['b2']))
+        x_reconstr_mean = \
+            tf.nn.sigmoid(tf.add(tf.matmul(layer_2, weights['out_mean']),
+                                 biases['out_mean']))
+        return x_reconstr_mean
