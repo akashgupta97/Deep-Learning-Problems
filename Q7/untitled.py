@@ -137,6 +137,7 @@ class VariationalAutoencoder(object):
             tf.nn.sigmoid(tf.add(tf.matmul(layer_2, weights['out_mean']),
                                  biases['out_mean']))
         return x_reconstr_mean
+<<<<<<< HEAD
 
     def _create_loss_optimizer(self):
         # The loss is composed of two terms:
@@ -173,3 +174,5 @@ class VariationalAutoencoder(object):
         opt, cost = self.sess.run((self.optimizer, self.cost),
                                   feed_dict={self.x: X})
         return cost
+=======
+>>>>>>> 28a8929d82be7213c9522fb8fcb754b979444557
