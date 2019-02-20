@@ -174,5 +174,25 @@ class VariationalAutoencoder(object):
         opt, cost = self.sess.run((self.optimizer, self.cost),
                                   feed_dict={self.x: X})
         return cost
-=======
->>>>>>> 28a8929d82be7213c9522fb8fcb754b979444557
+
+
+def transform(self, X):
+    """Transform data by mapping it into the latent space."""
+    # Note: This maps to mean of distribution, we could alternatively
+    # sample from Gaussian distribution
+    return self.sess.run(self.z_mean, feed_dict={self.x: X})
+
+
+def generate(self, z_mu=None):
+    """ Generate data by sampling from latent space.
+
+    If z_mu is not None, data for this point in latent space is
+    generated. Otherwise, z_mu is drawn from prior in latent
+    space.
+    """
+    if z_mu is None:
+        z_mu = np.random.normal(size=self.network_architecture["n_z"])
+    # Note: This maps to mean of distribution, we could alternatively
+    # sample from Gaussian distribution
+    return self.sess.run(self.x_reconstr_mean,
+                         feed_dict={self.z: z_mu})
