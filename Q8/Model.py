@@ -29,3 +29,14 @@ class RNN_Model:
         py_x = T.nnet.softmax(Z.dot(self.Wo) + self.bo)
         prediction = T.argmax(py_x, axis=1)
         ###
+
+        ### Training variable and function
+        cost = T.mean(T.nnet.categorical_crossentropy(py_x, thY))
+        updates = rmsprop(cost, params=self.params, lr=lr)
+
+        self.train_op = theano.function(
+            inputs=[thX, thY, thStartPoints],
+            outputs=[cost, prediction, py_x],
+            updates=updates,
+        )
+        ###
