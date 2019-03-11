@@ -40,3 +40,22 @@ class RNN_Model:
             updates=updates,
         )
         ###
+
+        ### iterating over input values
+        n_batches = len(X) // batch_sz
+        for i in range(epochs):
+            # t0 = datetime.datetime.now()
+            X, Y = shuffle(X, Y)
+            tn_correct = 0
+            tn_total = 0
+            cost = 0
+            for j in range(n_batches):
+                n_correct = 0
+                n_total = 0
+                sequenceLengths = []
+                input_sequence, output_sequence = [], []
+                for k in range(j * batch_sz, (j + 1) * batch_sz):
+                    # don't always add the end token
+                    input_sequence += X[k]
+                    output_sequence += Y[k]
+                    sequenceLengths.append(len(X[k]))
