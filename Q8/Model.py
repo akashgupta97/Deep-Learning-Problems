@@ -59,3 +59,15 @@ class RNN_Model:
                     input_sequence += X[k]
                     output_sequence += Y[k]
                     sequenceLengths.append(len(X[k]))
+
+                startPoints = np.zeros(sum(sequenceLengths), dtype=np.int32)
+                last = 0
+                for length in sequenceLengths:
+                    startPoints[last] = 1
+                    last += length
+                # try:
+                #     input_sequence = np.array(input_sequence, dtype=np.int32)
+                #     output_sequence = np.array(output_sequence, dtype=np.int32)
+                # except ValueError:
+                #     exit()
+                c, p, res = self.train_op(input_sequence, output_sequence, startPoints)
