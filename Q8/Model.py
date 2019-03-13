@@ -71,3 +71,13 @@ class RNN_Model:
                 # except ValueError:
                 #     exit()
                 c, p, res = self.train_op(input_sequence, output_sequence, startPoints)
+
+                cost += c
+
+                for pj, yj in zip(p, output_sequence):
+                    if pj == np.argmax(yj):
+                        n_correct += 1
+                tn_correct += n_correct
+                tn_total += len(output_sequence)
+                print("batch: %d/%d" % (j, n_batches), "cost:", c, "accuracy:",(float(n_correct) / len(output_sequence)))
+            print("\nepoch: %d/%d cost: %f accuracy: %f\n"%(i,epochs,cost,float(tn_correct/tn_total)))
