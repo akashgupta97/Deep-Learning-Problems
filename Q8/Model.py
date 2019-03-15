@@ -81,3 +81,13 @@ class RNN_Model:
                 tn_total += len(output_sequence)
                 print("batch: %d/%d" % (j, n_batches), "cost:", c, "accuracy:",(float(n_correct) / len(output_sequence)))
             print("\nepoch: %d/%d cost: %f accuracy: %f\n"%(i,epochs,cost,float(tn_correct/tn_total)))
+
+    def predict(self, X):
+        thX = T.imatrix('X')
+        thStartPoints = T.ivector('start_points')
+
+        Z = thX
+        for ru in self.hidden_layers:
+            Z = ru.output(Z, thStartPoints)
+        py_x = T.nnet.softmax(Z.dot(self.Wo) + self.bo)
+        prediction = T.argmax(py_x, axis=1)
