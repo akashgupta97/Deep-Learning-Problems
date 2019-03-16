@@ -91,3 +91,11 @@ class RNN_Model:
             Z = ru.output(Z, thStartPoints)
         py_x = T.nnet.softmax(Z.dot(self.Wo) + self.bo)
         prediction = T.argmax(py_x, axis=1)
+
+        self.predict_op = theano.function(
+            inputs=[thX, thStartPoints],
+            outputs=[prediction, py_x],
+            allow_input_downcast=True
+        )
+
+        ### iterating over input values
