@@ -99,3 +99,13 @@ class RNN_Model:
         )
 
         ### iterating over input values
+
+        Y, PY_X =[], []
+        for x in X:
+            startPoints = np.zeros(len(x), dtype=np.int32)
+            startPoints[0] = 1
+            p, py_x = self.predict_op(x, startPoints)
+            Y.append(p)
+            PY_X.append(py_x)
+        return Y, PY_X
+        ###
