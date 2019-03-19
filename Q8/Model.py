@@ -109,3 +109,11 @@ class RNN_Model:
             PY_X.append(py_x)
         return Y, PY_X
         ###
+
+    def __setstate__(self, state=None):
+        if state:
+            ru_params, Wo, bo = state
+        else:
+            Wo = init_weight(self.hidden_layer_sizes[-1], self.D)
+            bo = np.zeros(self.D)
+            ru_params = [None for i in self.hidden_layer_sizes]
