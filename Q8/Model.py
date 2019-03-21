@@ -117,3 +117,11 @@ class RNN_Model:
             Wo = init_weight(self.hidden_layer_sizes[-1], self.D)
             bo = np.zeros(self.D)
             ru_params = [None for i in self.hidden_layer_sizes]
+
+        Mi = self.D
+        self.hidden_layers = []
+        for i in range(len(self.hidden_layer_sizes)):
+            Mo = self.hidden_layer_sizes[i]
+            ru = self.rnn_unit(Mi, Mo, self.activation, state=ru_params[i])
+            self.hidden_layers.append(ru)
+            Mi = Mo
