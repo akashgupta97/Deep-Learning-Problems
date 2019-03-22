@@ -125,3 +125,11 @@ class RNN_Model:
             ru = self.rnn_unit(Mi, Mo, self.activation, state=ru_params[i])
             self.hidden_layers.append(ru)
             Mi = Mo
+
+        ### seting tensors
+        self.Wo = theano.shared(Wo)
+        self.bo = theano.shared(bo)
+        self.params = [self.Wo, self.bo]
+        for ru in self.hidden_layers:
+            self.params += ru.params
+        ###
