@@ -133,3 +133,9 @@ class RNN_Model:
         for ru in self.hidden_layers:
             self.params += ru.params
         ###
+
+    def __getstate__(self):
+        ru_params = []
+        for h in self.hidden_layers:
+            ru_params.append(h.__getstate__())
+        return tuple([ru_params, self.Wo.get_value(), self.bo.get_value()])
