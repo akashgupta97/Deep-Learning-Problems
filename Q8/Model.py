@@ -139,3 +139,21 @@ class RNN_Model:
         for h in self.hidden_layers:
             ru_params.append(h.__getstate__())
         return tuple([ru_params, self.Wo.get_value(), self.bo.get_value()])
+
+    # def save(self, filename):
+    #     state = self.__getstate__()
+    #     return state
+        # pickle.dump(state, open(filename,'wb'))
+
+    # def load(self, filename):
+    #     state = pickle.load(open(filename, 'rb'))
+    #     self.__setstate__(state)
+    #     return
+
+class CharPredictNNModel:
+    def __init__(self, hidden_lay_sz=(128,)):
+        self.chars = ' !?`-,.:;"\'?<>{}[]+-()&%$@^#*0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        self.i2c_map = {i + 1: self.chars[i] for i in range(len(self.chars))}
+        self.c2i_map = {v: k for k, v in self.i2c_map.items()}
+        self.i2c_map[0], self.c2i_map[''] = '', 0
+        self.D = len(self.i2c_map)
