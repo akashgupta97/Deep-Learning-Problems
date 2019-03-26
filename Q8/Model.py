@@ -157,3 +157,13 @@ class CharPredictNNModel:
         self.c2i_map = {v: k for k, v in self.i2c_map.items()}
         self.i2c_map[0], self.c2i_map[''] = '', 0
         self.D = len(self.i2c_map)
+
+        self.map_vect = {}
+        for i in self.c2i_map:
+            self.map_vect[i] = np.zeros(self.D)
+            self.map_vect[i][self.c2i_map[i]] = 1.0
+        # self.seq_length = seq_len
+
+        self.opt = Adam
+        self.activation = T.nnet.relu
+        self.hidden_lay_sz = hidden_lay_sz
