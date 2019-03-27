@@ -167,3 +167,12 @@ class CharPredictNNModel:
         self.opt = Adam
         self.activation = T.nnet.relu
         self.hidden_lay_sz = hidden_lay_sz
+
+    def compile(self):
+        self.model = RNN_Model(I=self.D, H=self.hidden_lay_sz, rnn_unit=GRU, opt=Adam, activation=T.nnet.relu)
+        # if model_file:
+        #     self.load(model_file)
+        # elif os.path.isfile('model_file.save'):
+        #     self.load('model_file.save')
+        # else:
+        #     self.model.__setstate__()
