@@ -186,3 +186,9 @@ class CharPredictNNModel:
                 X.append([self.map_vect[c] if c in self.map_vect else self.map_vect[''] for c in word])
                 Y.append([self.map_vect[c] if c in self.map_vect else self.map_vect[''] for c in word[1:] + ' '])
         return X, Y
+
+    def train(self, fname):
+        text = open(fname, 'r').read()
+        X, Y = self.sample_formation(text)
+        self.model.fit(X, Y)
+        self.save('model_file.save')
