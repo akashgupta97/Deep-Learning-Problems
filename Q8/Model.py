@@ -192,3 +192,12 @@ class CharPredictNNModel:
         X, Y = self.sample_formation(text)
         self.model.fit(X, Y)
         self.save('model_file.save')
+
+    def save(self, filename):
+        params = (self.hidden_lay_sz, self.model.__getstate__())
+        pickle.dump(params, open(filename, 'wb'))
+
+    def load(self, filename):
+        self.hidden_lay_sz, state = pickle.load(open(filename, 'rb'))
+        self.compile()
+        self.model.__setstate__(state)
