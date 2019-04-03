@@ -201,3 +201,14 @@ class CharPredictNNModel:
         self.hidden_lay_sz, state = pickle.load(open(filename, 'rb'))
         self.compile()
         self.model.__setstate__(state)
+
+    def test(self, fname):
+        text = open(fname, 'r').read()
+        X, Y = self.sample_formation(text)
+        X, Y = shuffle(X, Y)
+        Y_, _ = self.model.predict(X)
+        correct = 0
+        for i in range(len(Y_)):
+            if np.argmax(Y[i][-1]) == Y_[i][-1]:
+                correct += 1
+        return correct, len(X)
