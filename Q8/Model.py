@@ -212,3 +212,10 @@ class CharPredictNNModel:
             if np.argmax(Y[i][-1]) == Y_[i][-1]:
                 correct += 1
         return correct, len(X)
+
+    def pridect(self, text):
+        x = [self.map_vect[j] if j in self.map_vect else self.map_vect[''] for j in text]
+        p, y = self.model.predict(np.array([x]))
+        prob = dict((i, y[0][-1][i]) for i in range(len(y[0][-1])))
+        prob = sorted(prob.items(), key=lambda kv: kv[1], reverse=True)
+        return {self.i2c_map[k]:v for k,v in prob[:2]}
