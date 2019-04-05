@@ -219,3 +219,9 @@ class CharPredictNNModel:
         prob = dict((i, y[0][-1][i]) for i in range(len(y[0][-1])))
         prob = sorted(prob.items(), key=lambda kv: kv[1], reverse=True)
         return {self.i2c_map[k]:v for k,v in prob[:2]}
+
+if __name__ == '__main__':
+    fname = 'pg.txt'
+    cmodel = CharPredictNNModel(hidden_lay_sz=(128,))
+    cmodel.compile()
+    cmodel.train(fname)
