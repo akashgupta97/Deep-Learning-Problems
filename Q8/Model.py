@@ -225,3 +225,7 @@ if __name__ == '__main__':
     cmodel = CharPredictNNModel(hidden_lay_sz=(128,))
     cmodel.compile()
     cmodel.train(fname)
+
+    # testing
+    correct, total = cmodel.test(fname)
+    print("accuracy :", float(correct)/total)
