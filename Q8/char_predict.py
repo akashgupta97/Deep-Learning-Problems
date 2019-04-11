@@ -17,3 +17,16 @@ def get_top_words(words, n):
                 tword.append(j)
         itr += 1
     return tword
+
+def predict_words(text, model, map_vect, i2c_map, count):
+    pchars = predict_chars(text, model, map_vect, i2c_map)
+    count += 1
+    pwords = {}
+    for char in pchars:
+        if count >= 10:
+            return {'':1.0}
+        if char == ' ':
+            return {' ':1.0}
+        temp = predict_words(text[1:]+char, model, map_vect, i2c_map, count)
+        pwords.update({char+word:prob*pchars[char] for word, prob in temp.items()})
+    return pwords
