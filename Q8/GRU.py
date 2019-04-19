@@ -18,3 +18,13 @@ class gru:
             self.o_size = o_size
             self.w={}
             self.b={}
+
+            # reset weights
+            self.w['ur'] = np.random.normal(0,0.01,(h_size, i_size))
+            self.b['r'] = np.zeros((h_size, 1))
+            self.w['wr'] = np.random.normal(0,0.01,(h_size, h_size))
+
+            # update weights
+            self.w['uz'] = np.random.normal(0,0.01,(h_size, i_size))
+            self.b['z'] = np.zeros((h_size, 1))
+            self.w['wz'] = np.random.normal(0,0.01,(h_size, h_size))
