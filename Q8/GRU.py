@@ -28,3 +28,12 @@ class gru:
             self.w['uz'] = np.random.normal(0,0.01,(h_size, i_size))
             self.b['z'] = np.zeros((h_size, 1))
             self.w['wz'] = np.random.normal(0,0.01,(h_size, h_size))
+
+            # _h weights
+            self.w['u_h'] = np.random.normal(0,0.01,(h_size, i_size))
+            self.b['_h'] = np.zeros((h_size, 1))
+            self.w['w_h'] = np.random.normal(0,0.01,(h_size, h_size))
+
+            # out weight
+            self.w['wo'] = np.random.normal(0,0.01,(o_size, h_size))
+            self.b['o'] = np.zeros((o_size, 1))
