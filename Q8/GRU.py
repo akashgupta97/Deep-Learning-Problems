@@ -37,3 +37,13 @@ class gru:
             # out weight
             self.w['wo'] = np.random.normal(0,0.01,(o_size, h_size))
             self.b['o'] = np.zeros((o_size, 1))
+
+        if optimize == 'rmsprop' or optimize == 'adam':
+            self.m={}
+            self.m['ur'] = np.zeros((h_size, i_size))
+            self.m['wr'] = np.zeros((h_size, h_size))
+            self.m['uz'] = np.zeros((h_size, i_size))
+            self.m['wz'] = np.zeros((h_size, h_size))
+            self.m['u_h'] = np.zeros((h_size, i_size))
+            self.m['w_h'] = np.zeros((h_size, h_size))
+            self.m['wo'] = np.zeros((o_size, h_size))
