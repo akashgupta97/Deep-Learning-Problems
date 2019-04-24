@@ -47,3 +47,14 @@ class gru:
             self.m['u_h'] = np.zeros((h_size, i_size))
             self.m['w_h'] = np.zeros((h_size, h_size))
             self.m['wo'] = np.zeros((o_size, h_size))
+
+        if optimize == 'adam':
+            self.v={}
+            self.v['ur'] = np.zeros((h_size, i_size))
+            self.v['wr'] = np.zeros((h_size, h_size))
+            self.v['uz'] = np.zeros((h_size, i_size))
+            self.v['wz'] = np.zeros((h_size, h_size))
+            self.v['u_h'] = np.zeros((h_size, i_size))
+            self.v['w_h'] = np.zeros((h_size, h_size))
+            self.v['wo'] = np.zeros((o_size, h_size))
+            self.weight_update = adam
