@@ -58,3 +58,14 @@ class gru:
             self.v['w_h'] = np.zeros((h_size, h_size))
             self.v['wo'] = np.zeros((o_size, h_size))
             self.weight_update = adam
+        elif optimize == 'rmsprop':
+            self.weight_update = rmsprop
+
+    def forward_pass(self, inputs):
+
+        # decleare variables used forward pass
+        self.inputs = inputs
+        self.n_inp = len(inputs)
+        self.vr = []; self.vz = []; self.v_h = []; self.vo = [];
+        self.r=[]; self.z=[]; self._h=[]; self.h={}; self.o = []
+        self.h[-1] = np.zeros((self.h_size,1))
