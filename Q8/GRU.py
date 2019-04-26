@@ -69,3 +69,16 @@ class gru:
         self.vr = []; self.vz = []; self.v_h = []; self.vo = [];
         self.r=[]; self.z=[]; self._h=[]; self.h={}; self.o = []
         self.h[-1] = np.zeros((self.h_size,1))
+
+        # performing recurrsion
+        for i in range(self.n_inp):
+
+            # calculating reset gate value
+            # self.vr.append(np.dot(self.w['ur'],inputs[i]) + np.dot(self.w['wr'], self.h[i-1]) + self.b['r'])
+            # self.r.append(sigmoid(self.vr[i]))
+            self.r.append(sigmoid(np.dot(self.w['ur'],inputs[i]) + np.dot(self.w['wr'], self.h[i-1]) + self.b['r']))
+
+            # calculation update gate value
+            # self.vz.append(np.dot(self.w['uz'],inputs[i]) + np.dot(self.w['wz'], self.h[i-1])  + self.b['z'])
+            # self.z.append(sigmoid(self.vz[i]))
+            self.z.append(sigmoid(np.dot(self.w['uz'],inputs[i]) + np.dot(self.w['wz'], self.h[i-1])  + self.b['z']))
