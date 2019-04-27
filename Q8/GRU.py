@@ -82,3 +82,10 @@ class gru:
             # self.vz.append(np.dot(self.w['uz'],inputs[i]) + np.dot(self.w['wz'], self.h[i-1])  + self.b['z'])
             # self.z.append(sigmoid(self.vz[i]))
             self.z.append(sigmoid(np.dot(self.w['uz'],inputs[i]) + np.dot(self.w['wz'], self.h[i-1])  + self.b['z']))
+            # applying reset gate value
+            # self.v_h.append(np.dot(self.w['u_h'], inputs[i]) + np.dot(self.w['w_h'], np.multiply(self.h[i - 1], self.r[i])) +  + self.b['_h'])
+            # self._h.append(tanh(self.v_h[i]))
+            self._h.append(tanh(np.dot(self.w['u_h'], inputs[i]) + np.dot(self.w['w_h'], np.multiply(self.h[i - 1], self.r[i])) +  + self.b['_h']))
+
+            # applying update gate value
+            self.h[i] = np.multiply(self.z[i], self.h[i - 1]) + np.multiply(1-self.z[i], self._h[i])
