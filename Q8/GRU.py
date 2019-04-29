@@ -89,3 +89,10 @@ class gru:
 
             # applying update gate value
             self.h[i] = np.multiply(self.z[i], self.h[i - 1]) + np.multiply(1-self.z[i], self._h[i])
+
+            # calculating output
+            # self.vo.append(np.dot(self.w['wo'], self.h[i]) + self.b['o'])
+            # self.o.append(softmax(self.vo[i]))
+            self.o.append(softmax(np.dot(self.w['wo'], self.h[i]) + self.b['o']))
+
+        return self.o
