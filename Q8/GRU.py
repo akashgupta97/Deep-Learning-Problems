@@ -96,3 +96,15 @@ class gru:
             self.o.append(softmax(np.dot(self.w['wo'], self.h[i]) + self.b['o']))
 
         return self.o
+
+    def backward_pass(self, t):
+
+        # error calculation
+        e = self.error(t)
+
+        # dw variables
+        dw={}
+        db= {}
+        dw['uz'] = np.zeros((self.h_size, self.i_size))
+        db['z'] = np.zeros((self.h_size, 1))
+        dw['wz'] = np.zeros((self.h_size, self.h_size))
