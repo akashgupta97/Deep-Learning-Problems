@@ -108,3 +108,13 @@ class gru:
         dw['uz'] = np.zeros((self.h_size, self.i_size))
         db['z'] = np.zeros((self.h_size, 1))
         dw['wz'] = np.zeros((self.h_size, self.h_size))
+
+        # reset dw
+        dw['ur'] = np.zeros((self.h_size, self.i_size))
+        db['r'] = np.zeros((self.h_size, 1))
+        dw['wr'] = np.zeros((self.h_size, self.h_size))
+
+        # _h dw
+        dw['u_h'] = np.zeros((self.h_size, self.i_size))
+        db['_h'] = np.zeros((self.h_size, 1))
+        dw['w_h'] = np.zeros((self.h_size, self.h_size))
