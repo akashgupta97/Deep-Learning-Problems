@@ -118,3 +118,9 @@ class gru:
         dw['u_h'] = np.zeros((self.h_size, self.i_size))
         db['_h'] = np.zeros((self.h_size, 1))
         dw['w_h'] = np.zeros((self.h_size, self.h_size))
+
+        # hidden-2-output dw
+        dw['wo'] = np.zeros((self.o_size, self.h_size))
+        db['o'] = np.zeros((self.o_size, 1))
+
+        dh = 0.0
