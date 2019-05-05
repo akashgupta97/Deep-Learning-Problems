@@ -124,3 +124,13 @@ class gru:
         db['o'] = np.zeros((self.o_size, 1))
 
         dh = 0.0
+
+        # recurrsion in backword pass
+        for i in reversed(range(self.n_inp)):
+
+            # gradient at output layer
+            go = self.o[i] - t[i]
+
+            # hidden to outpur weight's dw
+            dw['wo'] += np.dot(go, self.h[i].T)
+            db['o'] += go
