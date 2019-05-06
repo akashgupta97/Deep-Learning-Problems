@@ -142,3 +142,13 @@ class gru:
             # dz_ = dsigmoid(self.vz[i]) * dz
             dz_ = np.multiply((1.0 - self.z[i]), self.z[i]) * dz
             dz__ = self.z[i] * dh
+
+            d_h = (1-self.z[i]) * dh
+            # d_h_ = dtanh(self.v_h) * d_h
+            d_h_ = 1-np.square(self._h[i]) * d_h
+
+            temp = np.dot(self.w['w_h'].T, d_h_)
+            dr = self.h[i-1] * temp
+            # dr_ = dsigmoid(self.vr) * dr
+            dr_ = np.multiply((1.0 - self.r[i]), self.r[i]) * dr
+            dr__ = self.r[i] * temp
