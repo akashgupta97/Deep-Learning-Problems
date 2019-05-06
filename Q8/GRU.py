@@ -134,3 +134,11 @@ class gru:
             # hidden to outpur weight's dw
             dw['wo'] += np.dot(go, self.h[i].T)
             db['o'] += go
+
+            # gradient at top hidden layer
+            dh += np.dot(self.w['wo'].T, go)
+
+            dz = (self.h[i-1] - self._h[i]) * dh
+            # dz_ = dsigmoid(self.vz[i]) * dz
+            dz_ = np.multiply((1.0 - self.z[i]), self.z[i]) * dz
+            dz__ = self.z[i] * dh
