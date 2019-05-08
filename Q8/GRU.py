@@ -162,3 +162,12 @@ class gru:
             dw['uz'] += np.dot(dz_, self.inputs[i].T)
             db['z'] += dz_
             dw['wz'] += np.dot(dz_, self.h[i-1].T)
+
+            # calculating _h dw
+            dw['u_h'] += np.dot(d_h_, self.inputs[i].T)
+            db['_h'] += d_h_
+            dw['w_h'] += np.dot(d_h_, np.multiply(self.r[i], self.h[i-1]).T)
+
+            dh = np.dot(self.w['wr'].T, dr_) + np.dot(self.w['wz'].T, dz_) + dz__ + dr__
+
+        return dw, db, np.linalg.norm(e)
