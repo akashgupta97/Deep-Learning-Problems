@@ -152,3 +152,13 @@ class gru:
             # dr_ = dsigmoid(self.vr) * dr
             dr_ = np.multiply((1.0 - self.r[i]), self.r[i]) * dr
             dr__ = self.r[i] * temp
+
+            # calculating reset dw
+            dw['ur'] += np.dot(dr_ , self.inputs[i].T)
+            db['r'] += dr_
+            dw['wr'] += np.dot(dr_ , self.h[i-1].T)
+
+            # calculating update dw
+            dw['uz'] += np.dot(dz_, self.inputs[i].T)
+            db['z'] += dz_
+            dw['wz'] += np.dot(dz_, self.h[i-1].T)
