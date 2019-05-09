@@ -171,3 +171,10 @@ class gru:
             dh = np.dot(self.w['wr'].T, dr_) + np.dot(self.w['wz'].T, dz_) + dz__ + dr__
 
         return dw, db, np.linalg.norm(e)
+
+    def error(self, t):
+        loss = np.sum(t * np.log(self.o))
+        return -loss
+
+    def save_model(self, fname):
+        pickle.dump([self.w, self.b], open(fname, 'wb'))
