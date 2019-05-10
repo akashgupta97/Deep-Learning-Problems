@@ -178,3 +178,6 @@ class gru:
 
     def save_model(self, fname):
         pickle.dump([self.w, self.b], open(fname, 'wb'))
+
+    def load_model(self, fname):
+        return pickle.load(open(fname, 'rb'))
