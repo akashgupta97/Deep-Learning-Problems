@@ -11,3 +11,12 @@ def usage():
     print "\t -text file name: input file name use for trainning model for character prediction"
     print "\t -npredict number of pridection: given npredict number of words predicted"
     exit()
+
+def parse_argv(argv):
+    rnn = ''; ftext=''; npredict=10
+    if len(argv) > 1:
+        if argv[1] == '-help' or argv[1] == '--help' or argv[1] == '-h':
+            usage()
+        if '-rnn' in argv:
+            ind=argv.index('-rnn')
+            rnn = sys.argv[ind+1]
