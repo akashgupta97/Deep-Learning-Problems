@@ -20,3 +20,12 @@ def parse_argv(argv):
         if '-rnn' in argv:
             ind=argv.index('-rnn')
             rnn = sys.argv[ind+1]
+        if '-text' in argv:
+            ind=argv.index('-text')
+            ftext = sys.argv[ind+1]
+        if '-npredict' in sys.argv:
+            ind=sys.argv.index('-npredict')
+            npredict = int(sys.argv[ind+1])
+        if not os.path.isfile(ftext):
+            print 'Enter a correct file path !!'
+            exit()
