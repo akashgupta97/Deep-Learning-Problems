@@ -29,3 +29,7 @@ def parse_argv(argv):
         if not os.path.isfile(ftext):
             print 'Enter a correct file path !!'
             exit()
+
+    rnn = vrnn if rnn == 'vrnn' else gru
+    fname = ftext if ftext else 'pg.txt'
+    return rnn, fname, npredict
