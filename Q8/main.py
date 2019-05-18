@@ -33,3 +33,11 @@ def parse_argv(argv):
     rnn = vrnn if rnn == 'vrnn' else gru
     fname = ftext if ftext else 'pg.txt'
     return rnn, fname, npredict
+
+if __name__ == "__main__":
+    rnn, fname, npredict = parse_argv(sys.argv)
+
+    chars = list(set(open(fname, 'r').read()))
+    i2c_map = {i: chars[i] for i in range(len(chars))}
+    c2i_map = {chars[i]: i for i in range(len(chars))}
+    v_size = len(chars)
