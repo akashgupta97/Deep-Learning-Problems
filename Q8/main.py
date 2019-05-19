@@ -41,3 +41,8 @@ if __name__ == "__main__":
     i2c_map = {i: chars[i] for i in range(len(chars))}
     c2i_map = {chars[i]: i for i in range(len(chars))}
     v_size = len(chars)
+
+    map_vect = {}
+    for i in range(len(chars)):
+        map_vect[chars[i]] = np.zeros((v_size, 1))
+        map_vect[chars[i]][i] = 1.0
