@@ -46,3 +46,9 @@ if __name__ == "__main__":
     for i in range(len(chars)):
         map_vect[chars[i]] = np.zeros((v_size, 1))
         map_vect[chars[i]][i] = 1.0
+
+    # training recurrent model
+    if os.path.isfile('./weights.pickle'):
+        model = rnn(v_size, 250, v_size, wb='./weights.pickle')
+    else:
+        model = train(fname, rnn, map_vect)
