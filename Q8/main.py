@@ -52,3 +52,11 @@ if __name__ == "__main__":
         model = rnn(v_size, 250, v_size, wb='./weights.pickle')
     else:
         model = train(fname, rnn, map_vect)
+
+    # testing model accuracy
+    test = 0
+    if test == 1:
+        test(fname, model, map_vect)
+
+    # console for word prediction
+    print "Enter partial sentence after '>'"
