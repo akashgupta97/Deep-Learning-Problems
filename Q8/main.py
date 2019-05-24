@@ -60,3 +60,13 @@ if __name__ == "__main__":
 
     # console for word prediction
     print "Enter partial sentence after '>'"
+    while True:
+        text = raw_input('>').strip(' |\n|\t')
+        if text == 'q' or text == 'Q':
+            exit()
+        elif text == '' or text == '\n':
+            continue
+        ind = 1
+        itext = text[-25:]
+        words = []
+        count = 0
