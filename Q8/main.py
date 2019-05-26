@@ -70,3 +70,9 @@ if __name__ == "__main__":
         itext = text[-25:]
         words = []
         count = 0
+        words = predict_words(itext, model, map_vect, i2c_map, count)
+        twords = get_top_words(words, npredict)
+        print "partial sentence:",text
+        print "Possible endings:"
+        for word in twords:
+            print '\t', word, '\t', text+word
