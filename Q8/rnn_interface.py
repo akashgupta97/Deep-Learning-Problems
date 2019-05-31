@@ -20,3 +20,9 @@ def train(fname, rnn, map_vect):
     # sample generation
     seq_length = 25
     samples = sample_formation(text, seq_length, map_vect)
+    # RNN training parameter
+    batch = 100
+    miter = 20
+    epoch0 = epoch = 3
+
+    print "training start."
