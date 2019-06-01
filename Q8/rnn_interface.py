@@ -26,3 +26,9 @@ def train(fname, rnn, map_vect):
     epoch0 = epoch = 3
 
     print "training start."
+    while epoch > 0:
+        itr = 0
+        while itr < miter:
+            deltaw = {}
+            deltab= {}
+            err = 0
