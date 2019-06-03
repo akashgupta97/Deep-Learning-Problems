@@ -32,3 +32,12 @@ def train(fname, rnn, map_vect):
             deltaw = {}
             deltab= {}
             err = 0
+
+            # mini_batch foramtion
+            mini_batch = [samples[np.random.randint(0, len(samples))] for i in range(batch)]
+
+            # mini_batch training
+            while mini_batch:
+                x,y = mini_batch.pop()
+                model.forward_pass(x)
+                dw, db, e = model.backward_pass(y)
