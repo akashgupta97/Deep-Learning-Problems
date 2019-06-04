@@ -41,3 +41,8 @@ def train(fname, rnn, map_vect):
                 x,y = mini_batch.pop()
                 model.forward_pass(x)
                 dw, db, e = model.backward_pass(y)
+                for j in dw:
+                    if j in deltaw:
+                        deltaw[j]+=dw[j]
+                    else:
+                        deltaw[j]=dw[j]
