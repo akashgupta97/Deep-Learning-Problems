@@ -46,3 +46,9 @@ def train(fname, rnn, map_vect):
                         deltaw[j]+=dw[j]
                     else:
                         deltaw[j]=dw[j]
+                for j in db:
+                    if j in deltab:
+                        deltab[j]+=db[j]
+                    else:
+                        deltab[j]=db[j]
+                err += e
