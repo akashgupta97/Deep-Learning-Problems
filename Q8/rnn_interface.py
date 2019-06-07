@@ -52,3 +52,11 @@ def train(fname, rnn, map_vect):
                     else:
                         deltab[j]=db[j]
                 err += e
+
+            # updating Recurrent network
+            model.weight_update(model, {j:deltaw[j]/batch for j in deltaw}, {j:deltab[j]/batch for j in deltab}, neta=0.01)
+            print '\t',itr,"batch error is",err/batch
+            itr += 1
+
+        print "\n %d epoch is completed\n" % (epoch0-epoch)
+        epoch -= 1
