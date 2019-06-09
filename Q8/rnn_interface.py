@@ -60,3 +60,6 @@ def train(fname, rnn, map_vect):
 
         print "\n %d epoch is completed\n" % (epoch0-epoch)
         epoch -= 1
+    print "training complete."
+    model.save_model('weights.pickle')
+    return model
