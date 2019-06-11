@@ -63,3 +63,9 @@ def train(fname, rnn, map_vect):
     print "training complete."
     model.save_model('weights.pickle')
     return model
+
+def test(fname, model, map_vect):
+    text = open(fname, 'r').read()
+    # sample generation
+    seq_length = 25
+    samples = sample_formation(text, seq_length, map_vect)
