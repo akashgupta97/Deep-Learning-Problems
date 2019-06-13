@@ -69,3 +69,12 @@ def test(fname, model, map_vect):
     # sample generation
     seq_length = 25
     samples = sample_formation(text, seq_length, map_vect)
+
+    # setting testing parameters
+    iters = 1000
+    correct = 0.0
+    itr = 0
+
+    # testing of RNN
+    print "\ntesting start."
+    while itr < iters:
