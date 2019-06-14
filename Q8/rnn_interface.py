@@ -78,3 +78,12 @@ def test(fname, model, map_vect):
     # testing of RNN
     print "\ntesting start."
     while itr < iters:
+
+        # selecting random sample from samples
+        x, y = samples[np.random.randint(0, len(samples))]
+
+        # producing output
+        _o = model.forward_pass(x)
+        if np.argmax(_o[-1]) == np.argmax(y[-1]):
+            correct += 1
+        itr += 1
