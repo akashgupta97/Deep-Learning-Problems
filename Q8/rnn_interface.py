@@ -87,3 +87,7 @@ def test(fname, model, map_vect):
         if np.argmax(_o[-1]) == np.argmax(y[-1]):
             correct += 1
         itr += 1
+    print "\ntesting complete.\n"
+    print "correct:\t",correct
+    print "incorrect:\t",iters-correct
+    print "\naccuracy:\t",correct/iters
