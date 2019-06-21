@@ -6,3 +6,9 @@ def sigmoid(x):
 def dsigmoid(x):
     t=sigmoid(x)
     return (1-t)*t
+
+def tanh(x):
+    return np.tanh(x)
+
+def dtanh(x):
+    return  1-np.square(np.tanh(x))
