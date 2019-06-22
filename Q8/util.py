@@ -12,3 +12,8 @@ def tanh(x):
 
 def dtanh(x):
     return  1-np.square(np.tanh(x))
+
+def softmax(x):
+    xexp = np.exp(x)
+    esum = np.sum(xexp)
+    return xexp/esum
