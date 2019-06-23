@@ -17,3 +17,11 @@ def softmax(x):
     xexp = np.exp(x)
     esum = np.sum(xexp)
     return xexp/esum
+
+def rmsprop(self, dw, db, neta, b1=.9, b2=.0, e=1e-8):
+    for wpi, g in dw.items():
+        self.m[wpi] = b1 * self.m[wpi] + (1 - b1) * np.square(g)
+        self.w[wpi] -= neta * np.divide(g, (np.sqrt(self.m[wpi]) + e))
+    for wpi in db:
+        self.b[wpi] -= neta * db[wpi]
+    return
