@@ -25,3 +25,14 @@ def rmsprop(self, dw, db, neta, b1=.9, b2=.0, e=1e-8):
     for wpi in db:
         self.b[wpi] -= neta * db[wpi]
     return
+
+def adam(self, dw, db, neta, b1=0.9, b2=0.99, e=1e-8):
+    for wpi, g in dw.items():
+        self.m[wpi] = (b1 * self.m[wpi]) + ((1. - b1) * g)
+        self.v[wpi] = (b2 * self.v[wpi]) + ((1. - b2) * np.square(g))
+        m_h = self.m[wpi]/(1.-b1)
+        v_h = self.v[wpi]/(1.-b2)
+        self.w[wpi] -= neta * m_h/(np.sqrt(v_h) + e)
+    for wpi in db:
+        self.b[wpi] -= neta * db[wpi]
+    return
