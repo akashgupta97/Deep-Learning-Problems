@@ -17,3 +17,11 @@ class vrnn:
         else:
             self.w={}
             self.b={}
+
+            # input to hidden weights
+            self.w['ih'] = np.random.normal(0, 0.01, (h_size, i_size))
+            self.b['ih'] = np.zeros((h_size, 1))
+
+            # prev hidden to hidden weights
+            self.w['ph'] = np.random.normal(0, 0.01, (h_size, h_size))
+            self.b['ph'] = np.zeros((h_size, 1))
