@@ -25,3 +25,13 @@ class vrnn:
             # prev hidden to hidden weights
             self.w['ph'] = np.random.normal(0, 0.01, (h_size, h_size))
             self.b['ph'] = np.zeros((h_size, 1))
+
+            # hidden to output weights
+            self.w['ho'] = np.random.normal(0,0.01,(o_size, h_size))
+            self.b['ho'] = np.zeros((o_size, 1))
+
+        if optimize == 'rmsprop' or optimize == 'adam':
+            self.m={}
+            self.m['ih'] = np.zeros((h_size, i_size))
+            self.m['ph'] = np.zeros((h_size, h_size))
+            self.m['ho'] = np.zeros((o_size, h_size))
