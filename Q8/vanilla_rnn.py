@@ -35,3 +35,10 @@ class vrnn:
             self.m['ih'] = np.zeros((h_size, i_size))
             self.m['ph'] = np.zeros((h_size, h_size))
             self.m['ho'] = np.zeros((o_size, h_size))
+
+        if optimize == 'adam':
+            self.v={}
+            self.v['ih'] = np.zeros((h_size, i_size))
+            self.v['ph'] = np.zeros((h_size, h_size))
+            self.v['ho'] = np.zeros((o_size, h_size))
+            self.weight_update = adam
