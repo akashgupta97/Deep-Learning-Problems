@@ -42,3 +42,15 @@ class vrnn:
             self.v['ph'] = np.zeros((h_size, h_size))
             self.v['ho'] = np.zeros((o_size, h_size))
             self.weight_update = adam
+
+        elif optimize == 'rmsprop':
+            self.weight_update = rmsprop
+
+    def forward_pass(self, inputs):
+
+        self.inputs = inputs
+        self.n_inp = len(inputs)
+        self.o = []; self.h = {}
+        self.vh = []; self.vo = []
+        self.h[-1] = np.zeros((self.h_size, 1))
+        for i in range(self.n_inp):
