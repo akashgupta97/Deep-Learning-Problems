@@ -54,3 +54,11 @@ class vrnn:
         self.vh = []; self.vo = []
         self.h[-1] = np.zeros((self.h_size, 1))
         for i in range(self.n_inp):
+            # calculation for hidden activation
+            self.vh.append(np.dot(self.w['ih'], inputs[i]) + np.dot(self.w['ph'], self.h[i - 1]) + self.b['ih'])
+            self.h[i] = (sigmoid(self.vh[i]))
+
+            # calculation for output activation
+            self.vo.append(np.dot(self.w['ho'], self.h[i]) + self.b['ho'])
+            self.o.append(softmax(self.vo[i]))
+        return self.o
