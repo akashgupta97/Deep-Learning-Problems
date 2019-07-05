@@ -62,3 +62,13 @@ class vrnn:
             self.vo.append(np.dot(self.w['ho'], self.h[i]) + self.b['ho'])
             self.o.append(softmax(self.vo[i]))
         return self.o
+
+    def backward_pass(self, t):
+        # error calculation
+        e = self.error(t)
+
+        # dw variables
+        dw={}
+        db= {}
+        dw['ih'] = np.zeros((self.h_size, self.i_size))
+        db['ih'] = np.zeros((self.h_size, 1))
