@@ -72,3 +72,13 @@ class vrnn:
         db= {}
         dw['ih'] = np.zeros((self.h_size, self.i_size))
         db['ih'] = np.zeros((self.h_size, 1))
+
+        # hidden-2-output dw
+        dw['ho'] = np.zeros((self.o_size, self.h_size))
+        db['ho'] = np.zeros((self.o_size, 1))
+
+        # hidden-2-hidden dw
+        dw['ph'] = np.zeros((self.h_size, self.h_size))
+        db['ph'] = np.zeros((self.h_size, 1))
+
+        dh = 0
