@@ -82,3 +82,14 @@ class vrnn:
         db['ph'] = np.zeros((self.h_size, 1))
 
         dh = 0
+        for i in reversed(range(self.n_inp)):
+
+            # gradient at output layer
+            do = self.o[i] - t[i]
+
+            # hidden to outpur weight's dw
+            dw['ho'] += np.dot(do, self.h[i].T)
+            db['ho'] += do
+
+            # gradient at hidden layer
+            dh += np.dot(self.w['ho'].T, do) * dsigmoid(self.vh[i])
