@@ -93,3 +93,14 @@ class vrnn:
 
             # gradient at hidden layer
             dh += np.dot(self.w['ho'].T, do) * dsigmoid(self.vh[i])
+            # input to hidden weight's dw
+            dw['ih'] += np.dot(dh, self.inputs[i].T)
+            db['ih'] += dh
+
+            # hidden to prev hidden weight's dw
+            dw['ph'] += np.dot(dh, self.h[i - 1].T)
+            db['ph'] += dh
+
+            dh = np.dot(self.w['ph'].T, dh) * dsigmoid(self.vh[i - 1])
+
+        return dw, db, np.linalg.norm(e)
