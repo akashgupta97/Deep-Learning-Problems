@@ -104,3 +104,13 @@ class vrnn:
             dh = np.dot(self.w['ph'].T, dh) * dsigmoid(self.vh[i - 1])
 
         return dw, db, np.linalg.norm(e)
+
+    def error(self, t):
+        loss = np.sum(t * np.log(self.o))
+        return -loss
+
+    def save_model(self, fname):
+        pickle.dump([self.w, self.b], open(fname, 'wb'))
+
+    def load_model(self, fname):
+        return pickle.load(open(fname, 'rb'))
