@@ -13,3 +13,10 @@ def train(fname, rnn, map_vect):
     text = open(fname,'r').read()
     chars = list(set(text))
     v_size, t_size = len(chars), len(text)
+
+    # recurrent NN initalization
+    model = rnn(v_size, 250, v_size, optimize='rmsprop')
+
+    # sample generation
+    seq_length = 25
+    samples = sample_formation(text, seq_length, map_vect)
